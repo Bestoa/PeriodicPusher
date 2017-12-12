@@ -12,7 +12,7 @@
     "TRACKERS" : "",
     "private_data":
     {
-        "API_BASE" : "",
+        "API_BASE" : "https://api.nanopool.org/v1/etc/user/",
         "ACCOUNT" : ""
     }
 }
