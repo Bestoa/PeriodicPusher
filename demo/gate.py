@@ -11,6 +11,10 @@ if len(sys.argv[1]) < 2:
     print('Missing config file.')
 
 pp = PeriodicPusher(sys.argv[1])
+# 0 for API
+# 1 for description
+# 2 for current price
+# 3 for last reported price
 price_list = list()
 
 def need_report(p1, p2, delta):
@@ -40,7 +44,7 @@ def init_price_list(config):
     while i < len(config['CURRENCY']):
         api = config['API_BASE'] + list(config['CURRENCY'][i].keys())[0]
         price = get_price(api)
-        price_list.append([api, list(config['CURRENCY'][i].values())[0], price])
+        price_list.append([api, list(config['CURRENCY'][i].values())[0], price, price])
         i += 1
     print(price_list)
 
@@ -54,9 +58,11 @@ def check_price(config):
     print('Check price')
     while i < len(price_list):
         price = get_price(price_list[i][0])
-        if need_report(price, price_list[i][2], config['THRESHOLD']):
+        if price != 0:
             price_list[i][2] = price
-            msg += str(price_list[i][1]) + ' ' + str(price) + ' '
+            if need_report(price, price_list[i][3], config['THRESHOLD']):
+                msg += str(price_list[i][1]) + ' ' + str(price) + ' '
+                price_list[i][3] = price
         i += 1
     print(price_list)
     if not msg:
