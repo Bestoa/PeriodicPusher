@@ -51,6 +51,9 @@ class PeriodicPusher:
     def register(self, func):
         self.do_notify = func
 
+    def init_sub(self, func):
+        func(self.config_priv)
+
     def __init__(self, config_file):
         config_json = open(config_file).read()
         self.config = json.loads(config_json)
