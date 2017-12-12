@@ -1,0 +1,16 @@
+{
+    "APPID" : "",
+    "SECRET" : "",
+    "INTERVAL" : 3600,
+    "mute_data" :
+    {
+        "NEED_MUTE" : true,
+        "MUTE_START" : 0,
+        "MUTE_END" : 8 
+    },
+    "EVENT_NAME" : "",
+    "TRACKERS" : "",
+    "private_data":
+    {
+    }
+}

@@ -1,0 +1,17 @@
+{
+    "APPID" : "",
+    "SECRET" : "",
+    "INTERVAL" : 10,
+    "mute_data" :
+    {
+        "NEED_MUTE" : false
+    },
+    "EVENT_NAME" : "",
+    "TRACKERS" : "",
+    "private_data":
+    {
+        "API_BASE" : "",
+        "ACCOUNT" : "",
+        "THRESHOLD": 100 
+    }
+}
