@@ -25,7 +25,7 @@ class PeriodicPusher:
         return False
 
     def push_to_user(self, msg, importart = False):
-        self.log('Push message:' + str(msg))
+        self.log('Push message: ' + str(msg))
         if not importart and self.check_mute():
             self.log('Mute Message')
             return
