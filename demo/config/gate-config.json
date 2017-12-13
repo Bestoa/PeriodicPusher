@@ -1,19 +1,22 @@
 {
-    "APPID" : "",
-    "SECRET" : "",
     "INTERVAL" : 60,
+    "PUSHER_NAME" : "PushBearWrapper",
+    "pusher_data" :
+    {
+        "API_BASE" : "https://pushbear.ftqq.com/sub?sendkey=",
+        "KEY" : "",
+        "TITLE" : ""
+    },
     "mute_data" :
     {
         "NEED_MUTE" : true,
         "MUTE_START" : 23,
         "MUTE_END" : 8 
     },
-    "EVENT_NAME" : "",
-    "TRACKERS" : "",
     "private_data":
     {
         "API_BASE" : "http://data.gate.io/api2/1/ticker/",
-        "THRESHOLD" : 5, 
+        "THRESHOLD" : 2, 
         "CURRENCY" : [
             { "btc_usdt" : "btc:usdt" } ,
             { "eth_usdt" : "eth:usdt" } ,

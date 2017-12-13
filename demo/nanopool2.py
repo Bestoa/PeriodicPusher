@@ -18,14 +18,15 @@ is_offline = False
 @pp.register
 def offline_checker(config):
     global is_offline
+    print('Offline check...')
     try:
         r = requests.get(config['API_BASE'] + config['ACCOUNT'])
         if r.status_code != 200:
-            print('Request failed, status = ' + r.status_code)
+            print('Request failed, status: ' + r.status_code)
             return (None, False);
         result = json.loads(r.text)
         if not result['status']:
-            print('Api call failed, error =  ' + result['error'])
+            print('Api call failed, error:  ' + result['error'])
             return (None, False);
         if result['data'] < config['THRESHOLD']:
             if not is_offline:
@@ -37,9 +38,10 @@ def offline_checker(config):
         else:
             if is_offline:
                 is_offline = False
+            print('Online!')
             return (None, False);
-    except Exception as e:
-        print('Request exception: ' + e)
+    except:
+        print('Exception happened.')
         return (None, False);
 
 if __name__ == '__main__':

@@ -2,8 +2,8 @@ import json
 import time
 import os
 import sched
-
-from instapush import Instapush, App
+import PusherWrapper
+from importlib import import_module
 
 class PeriodicPusher:
     def log(self, msg):
@@ -29,7 +29,7 @@ class PeriodicPusher:
         if not importart and self.check_mute():
             self.log('Mute Message')
             return
-        self.app.notify(event_name = self.config['EVENT_NAME'], trackers = { self.config['TRACKERS']: str(msg) })
+        self.pusher.push(msg)
 
     def notify_once(self):
         msg, important = self.do_notify(self.config_priv)
@@ -58,11 +58,13 @@ class PeriodicPusher:
         config_json = open(config_file).read()
         self.config = json.loads(config_json)
         self.log('Config: ' + str(self.config))
+
+        pusher_wrapper = import_module('PusherWrapper.' + self.config['PUSHER_NAME'])
         
         self.config_mute = self.config['mute_data']
         self.config_priv = self.config['private_data']
         
         self.schedule = sched.scheduler(time.time, time.sleep)
-        self.app = App(appid = self.config['APPID'], secret = self.config['SECRET'])
+        self.pusher = pusher_wrapper.Pusher(self.config['pusher_data'])
         self.do_notify = None
 

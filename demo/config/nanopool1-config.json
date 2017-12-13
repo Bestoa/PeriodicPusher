@@ -1,15 +1,19 @@
 {
-    "APPID" : "",
-    "SECRET" : "",
     "INTERVAL" : 3600,
+    "PUSHER_NAME" : "InstaPushWrapper",
+    "pusher_data" :
+    {
+        "APPID" : "",
+        "SECRET" : "",
+        "EVENT_NAME" : "",
+        "TRACKERS" : ""
+    },
     "mute_data" :
     {
         "NEED_MUTE" : true,
         "MUTE_START" : 23,
         "MUTE_END" : 8 
     },
-    "EVENT_NAME" : "",
-    "TRACKERS" : "",
     "private_data":
     {
         "API_BASE" : "https://api.nanopool.org/v1/etc/user/",
