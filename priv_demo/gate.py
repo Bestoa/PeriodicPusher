@@ -44,7 +44,7 @@ def get_key(pair):
     return list(pair.keys())[0]
 
 def get_value(pair):
-    return list(pair.value())[0]
+    return list(pair.values())[0]
 
 @pp.init_sub
 def init_price_list(config):
@@ -53,7 +53,7 @@ def init_price_list(config):
     while i < len(config['CURRENCY']):
         api = config['API_BASE'] + get_key(config['CURRENCY'][i])
         price = get_price(api)
-        price_list.append([api, get_value(config['CURRENCY'][i]), price, price])
+        price_list.append([api, get_value(config['CURRENCY'][i]), price, 0])
         i += 1
     print('Price init finished.')
     print(price_list)
@@ -71,7 +71,7 @@ def check_price(config):
         if price != 0:
             price_list[i][2] = price
             if need_report(price, price_list[i][3], config['THRESHOLD']):
-                msg += '%s current %f, last report %f ' % (price_list[i][1], price_list[i][2], price_list[i][3])
+                msg += '\n\n%s current %f, last report %f\n\n' % (price_list[i][1], price_list[i][2], price_list[i][3])
                 price_list[i][3] = price
         i += 1
     print(price_list)
