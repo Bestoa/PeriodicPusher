@@ -21,7 +21,7 @@ def build_msg(origin_msg):
     msg.append({'avgHashrate' : sorted(origin_msg['avgHashrate'].items(), key = lambda x:int(x[0][1:]))})
     return str(msg)
 
-@pp.register
+@pp.notification_register
 def hourly_notify(config):
     try:
         r = requests.get(config['API_BASE'] + config['ACCOUNT'])

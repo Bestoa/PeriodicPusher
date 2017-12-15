@@ -15,7 +15,7 @@ if len(sys.argv) < 2:
 pp = PeriodicPusher(sys.argv[1])
 is_offline = False
 
-@pp.register
+@pp.notification_register
 def offline_checker(config):
     global is_offline
     print('Offline check...')

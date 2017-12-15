@@ -46,7 +46,7 @@ def get_key(pair):
 def get_value(pair):
     return list(pair.values())[0]
 
-@pp.init_sub
+@pp.prepare
 def init_price_list(config):
     i = 0
     global price_list
@@ -60,7 +60,7 @@ def init_price_list(config):
 
 
 
-@pp.register
+@pp.notification_register
 def check_price(config):
     i = 0
     msg = '' 
@@ -71,7 +71,7 @@ def check_price(config):
         if price != 0:
             price_list[i][2] = price
             if need_report(price, price_list[i][3], config['THRESHOLD']):
-                msg += '\n\n%s current %f, last report %f\n\n' % (price_list[i][1], price_list[i][2], price_list[i][3])
+                msg += '\n\n%s current %.2f, last report %.2f\n\n' % (price_list[i][1], price_list[i][2], price_list[i][3])
                 price_list[i][3] = price
         i += 1
     print(price_list)
