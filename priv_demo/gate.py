@@ -71,7 +71,7 @@ def check_price(config):
         if price != 0:
             price_list[i][2] = price
             if need_report(price, price_list[i][3], config['THRESHOLD']):
-                msg += '\n\n%s current %.2f, last report %.2f\n\n' % (price_list[i][1], price_list[i][2], price_list[i][3])
+                msg += '\n\n{} current {}, last report {}\n\n'.format(price_list[i][1], price_list[i][2], price_list[i][3])
                 price_list[i][3] = price
         i += 1
     print(price_list)
