@@ -16,6 +16,6 @@
     {
         "API_BASE" : "https://api.nanopool.org/v1/etc/reportedhashrate/",
         "ACCOUNT" : "",
-        "THRESHOLD": 50
+        "THRESHOLD": 5
     }
 }
