@@ -3,7 +3,7 @@ import json
 import sys
 import time
 sys.path.append('../')
-from PeriodicPusher import PeriodicPusher
+from PeriodicPusher import PeriodicPusher, Message
 
 if __name__ != '__main__':
     exit()
@@ -36,13 +36,13 @@ def offline_checker(config):
     print('Offline check...')
     ret, current_hashrate = get_report_hashrate(config)
     if ret:
-        print('Current hashrate is %.2f' % current_hashrate)
+        print('Current hashrate is {}'.format(current_hashrate))
         high = last_hashrate * (100 + config['THRESHOLD']) / 100
         low = last_hashrate * (100 - config['THRESHOLD']) / 100
         last_hashrate = current_hashrate
         if current_hashrate > high or current_hashrate < low:
-            return (current_hashrate, True)
-    return (None, False);
+            return Message(current_hashrate, True)
+    return None;
 
 @pp.prepare
 def init(config):

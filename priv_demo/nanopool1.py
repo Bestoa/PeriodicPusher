@@ -3,7 +3,7 @@ import json
 import sys
 import time
 sys.path.append('../')
-from PeriodicPusher import PeriodicPusher
+from PeriodicPusher import PeriodicPusher, Message
 
 if __name__ != '__main__':
     exit()
@@ -27,16 +27,16 @@ def hourly_notify(config):
         r = requests.get(config['API_BASE'] + config['ACCOUNT'])
         if r.status_code != 200:
             print('Request failed, status: ' + r.status_code)
-            return (None, False);
+            return None
         result = json.loads(r.text)
         if not result['status']:
             print('Api call failed, error: ' + result['error'])
-            return (None, False);
+            return None
         else:
-            return (build_msg(result['data']), False)
+            return Message(build_msg(result['data']))
     except:
         print('Exception happened.')
-        return (None, False);
+        return None
 
 if __name__ == '__main__':
     pp.run()

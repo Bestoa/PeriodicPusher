@@ -1,6 +1,6 @@
 import sys
 sys.path.append('../')
-from PeriodicPusher import PeriodicPusher
+from PeriodicPusher import PeriodicPusher, Message
 
 if __name__ != '__main__':
     exit()
@@ -18,9 +18,7 @@ def demo_init(config):
 def demo_get_notification(config):
     print('From get_notification, config: %s' % str(config))
     # Add your notification here, config contains private_data in json file.
-    # The first return value is the message you want to push to user, the second
-    # shows whether this message is important or not.
-    return ('Test', False)
+    return Message('Test')
 
 # Register init and get_notification
 pp.prepare(demo_init)

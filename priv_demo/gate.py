@@ -2,7 +2,7 @@ import requests
 import json
 import sys
 sys.path.append('../')
-from PeriodicPusher import PeriodicPusher
+from PeriodicPusher import PeriodicPusher, Message
 
 if __name__ != '__main__':
     exit()
@@ -67,8 +67,8 @@ def check_price(config):
                 price_dict[currency]['last_report'] = price
     print(log_msg)
     if msg == '':
-        msg = None
-    return (msg, False)
+        return None
+    return Message(msg)
 
 if __name__ == '__main__':
     pp.run()

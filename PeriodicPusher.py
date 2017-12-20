@@ -5,6 +5,11 @@ import sched
 import PusherWrapper
 from importlib import import_module
 
+class Message:
+    def __init__(self, msg, important = False):
+        self.msg = msg
+        self.important = important
+
 class PeriodicPusher:
     def log(self, msg):
         cur_time = time.asctime(time.localtime(time.time()))
@@ -27,21 +32,21 @@ class PeriodicPusher:
             return True 
         return False
 
-    def push_to_user(self, msg, importart = False):
-        self.log('Push message: ' + str(msg))
+    def push_to_user(self, msg):
+        self.log('Push message: {}'.format(msg.msg))
         # Never mute important messages
-        if not importart and self.check_mute():
+        if not msg.important and self.check_mute():
             self.log('Mute Message')
             return
         # Call pusher
-        self.pusher.push(msg)
+        self.pusher.push(msg.msg)
 
     def notify_once(self):
-        # Get information from implementation
-        msg, important = self.get_notification(self.config_priv)
+        # Get message from implementation
+        msg = self.get_notification(self.config_priv)
         # Don't push empty message
         if msg:
-            self.push_to_user(msg, important)
+            self.push_to_user(msg)
 
     def notify_loop(self, interval):
         # Next notification
