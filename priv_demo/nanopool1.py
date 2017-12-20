@@ -4,12 +4,14 @@ import sys
 import time
 sys.path.append('../')
 from PeriodicPusher import PeriodicPusher, Message
+import Log
+import traceback
 
 if __name__ != '__main__':
     exit()
 
 if len(sys.argv) < 2:
-    print('Missing config file.')
+    Log.log('Missing config file.', True)
     exit()
 
 pp = PeriodicPusher(sys.argv[1])
@@ -26,16 +28,16 @@ def hourly_notify(config):
     try:
         r = requests.get(config['API_BASE'] + config['ACCOUNT'])
         if r.status_code != 200:
-            print('Request failed, status: ' + r.status_code)
+            Log.log('Request failed, status: {}'.format(r.status_code), True)
             return None
         result = json.loads(r.text)
         if not result['status']:
-            print('Api call failed, error: ' + result['error'])
+            Log.log('Api call failed, error: {}'.format(result['error']), True)
             return None
         else:
             return Message(build_msg(result['data']))
-    except:
-        print('Exception happened.')
+    except Exception:
+        Log.log(traceback.foramt_exc(), True)
         return None
 
 if __name__ == '__main__':

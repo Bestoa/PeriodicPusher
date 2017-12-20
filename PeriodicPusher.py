@@ -3,6 +3,7 @@ import time
 import os
 import sched
 import PusherWrapper
+import Log
 from importlib import import_module
 
 class Message:
@@ -11,12 +12,6 @@ class Message:
         self.important = important
 
 class PeriodicPusher:
-    def log(self, msg):
-        cur_time = time.asctime(time.localtime(time.time()))
-        # Show time with green.
-        format_time = '\033[1;32;40m' + cur_time + '\033[0m'
-        print('%s %s' % (format_time, str(msg)))
-
     def check_mute(self):
         if not self.config_mute['NEED_MUTE']:
             return False
@@ -33,10 +28,10 @@ class PeriodicPusher:
         return False
 
     def push_to_user(self, msg):
-        self.log('Push message: {}'.format(msg.msg))
+        Log.log('Push message: {}'.format(msg.msg))
         # Never mute important messages
         if not msg.important and self.check_mute():
-            self.log('Mute Message')
+            Log.log('Mute Message')
             return
         # Call pusher
         self.pusher.push(msg.msg)
@@ -55,9 +50,9 @@ class PeriodicPusher:
 
     def run(self):
         if not self.get_notification:
-            self.log('Must set get_notification method before call run!')
+            Log.log('Must set get_notification method before call run!', True)
             return
-        self.log('Start')
+        Log.log('Start')
         self.schedule.enter(0, 0, self.notify_loop, kwargs = { 'interval': self.config['INTERVAL'] })
         self.schedule.run()
 
@@ -72,7 +67,7 @@ class PeriodicPusher:
     def __init__(self, config_file):
         config_json = open(config_file).read()
         self.config = json.loads(config_json)
-        self.log('Config: %s' % str(self.config))
+        Log.log('Config: {}'.format(self.config))
 
         pusher_wrapper = import_module('PusherWrapper.%s' % self.config['PUSHER_NAME'])
         

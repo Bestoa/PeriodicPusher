@@ -1,6 +1,7 @@
 import sys
 sys.path.append('../')
 from PeriodicPusher import PeriodicPusher, Message
+import Log
 
 if __name__ != '__main__':
     exit()
@@ -12,11 +13,11 @@ if len(sys.argv) < 2:
 pp = PeriodicPusher(sys.argv[1])
 
 def demo_init(config):
-    print('From init, config: %s' % str(config))
+    Log.log('From init, config: {}'.format(config))
     # Add your init code here, config contains private_data in json file
 
 def demo_get_notification(config):
-    print('From get_notification, config: %s' % str(config))
+    Log.log('From get_notification, config: {}'.format(config))
     # Add your notification here, config contains private_data in json file.
     return Message('Test')
 
