@@ -11,11 +11,7 @@ if len(sys.argv[1]) < 2:
     print('Missing config file.')
 
 pp = PeriodicPusher(sys.argv[1])
-# 0 for API
-# 1 for description
-# 2 for current price
-# 3 for last reported price
-price_list = list()
+price_dict = dict()
 
 def need_report(p1, p2, delta):
     high = p2 * (100 + delta) /100
@@ -40,41 +36,36 @@ def get_price(url):
         print('Get price exception happened.')
         return 0
 
-def get_key(pair):
-    return list(pair.keys())[0]
-
-def get_value(pair):
-    return list(pair.values())[0]
-
 @pp.prepare
-def init_price_list(config):
-    i = 0
-    global price_list
-    while i < len(config['CURRENCY']):
-        api = config['API_BASE'] + get_key(config['CURRENCY'][i])
+def init_price_dict(config):
+    global price_dict
+    print('Price init...')
+    msg = ''
+    for currency_pair in config['CURRENCY']:
+        desc = currency_pair['desc']
+        api = config['API_BASE'] + currency_pair['api']
         price = get_price(api)
-        price_list.append([api, get_value(config['CURRENCY'][i]), price, 0])
-        i += 1
+        msg += '{} {} '.format(desc, price)
+        price_dict.update({ desc : { 'api' : api, 'last_report' : price } })
+    print(msg)
     print('Price init finished.')
-    print(price_list)
 
 
 
 @pp.notification_register
 def check_price(config):
-    i = 0
-    msg = '' 
-    global price_list
-    print('Check price')
-    while i < len(price_list):
-        price = get_price(price_list[i][0])
+    msg = ''
+    log_msg = ''
+    global price_dict
+    print('Check price...')
+    for currency in price_dict:
+        price = get_price(price_dict[currency]['api'])
         if price != 0:
-            price_list[i][2] = price
-            if need_report(price, price_list[i][3], config['THRESHOLD']):
-                msg += '\n\n{} current {}, last report {}\n\n'.format(price_list[i][1], price_list[i][2], price_list[i][3])
-                price_list[i][3] = price
-        i += 1
-    print(price_list)
+            log_msg += '{} {} '.format(currency, price)
+            if need_report(price, price_dict[currency]['last_report'], config['THRESHOLD']):
+                msg += '\n\n{} current {}, last report {}\n\n'.format(currency, price, price_dict[currency]['last_report'])
+                price_dict[currency]['last_report'] = price
+    print(log_msg)
     if msg == '':
         msg = None
     return (msg, False)

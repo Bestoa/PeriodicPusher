@@ -18,9 +18,10 @@
         "API_BASE" : "http://data.gate.io/api2/1/ticker/",
         "THRESHOLD" : 2, 
         "CURRENCY" : [
-            { "btc_usdt" : "btc:usdt" } ,
-            { "eth_usdt" : "eth:usdt" } ,
-            { "etc_usdt" : "etc:usdt" }
+            { "desc" : "btc:usdt", "api" : "btc_usdt" } ,
+            { "desc" : "eth:usdt", "api" : "eth_usdt" } ,
+            { "desc" : "ltc:usdt", "api" : "ltc_usdt" } ,
+            { "desc" : "etc:usdt", "api" : "etc_usdt" }
         ]
     }
 }
