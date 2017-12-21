@@ -22,3 +22,4 @@ class Pusher:
                 Log.log('Request failed, message: {}'.format(res.message), True)
         except Exception:
             Log.log(traceback.format_exc(), True)
+
