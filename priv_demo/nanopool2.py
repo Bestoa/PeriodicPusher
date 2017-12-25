@@ -1,11 +1,11 @@
-import requests
+import traceback
 import json
 import sys
 import time
 sys.path.append('../')
 from PeriodicPusher import PeriodicPusher, Message
 import Log
-import traceback
+import HttpHelper
 
 if __name__ != '__main__':
     exit()
@@ -17,20 +17,21 @@ if len(sys.argv) < 2:
 pp = PeriodicPusher(sys.argv[1])
 last_hashrate = -1
 
+def err_check(text):
+    result = json.loads(text)
+    if not result['status']:
+        Log.log('Api call failed, error: {}'.format(result['error']), True)
+        return True
+    return False
+
+
 def get_report_hashrate(config):
-    try:
-        r = requests.get(config['API_BASE'] + config['ACCOUNT'])
-        if r.status_code != 200:
-            Log.log('Request failed, status: {}'.format(r.status_code), True)
-            return -1
-        result = json.loads(r.text)
-        if not result['status']:
-            Log.log('Api call failed, error: {}'.format(result['error']), True)
-            return -1
+    url = config['API_BASE'] + config['ACCOUNT']
+    text = HttpHelper.get(url, err_check = err_check)
+    if text:
+        result = json.loads(text)
         return result['data']
-    except Exception:
-        Log.log(traceback.format_exc(), True)
-        return -1
+    return -1
 
 @pp.notification_register
 def offline_checker(config):

@@ -1,12 +1,12 @@
-import requests
+import traceback
 import json
 import sys
 import time
 sys.path.append('../')
 from PeriodicPusher import PeriodicPusher, Message
 import Log
-import traceback
 from exchange import *
+import HttpHelper
 
 if __name__ != '__main__':
     exit()
@@ -25,7 +25,7 @@ def get_cny_exchange_rate():
         return cny_exchange_rate[0]
     Log.log('Update CNY exchange rate...')
     rate = get_exchange_rate()
-    if rate >= -1:
+    if rate >= 0:
         cny_exchange_rate[0] = rate
         cny_exchange_rate[1] = now
     Log.log('USD:CNY = {}'.format(cny_exchange_rate[0]))
@@ -40,20 +40,18 @@ def need_report(p1, p2, delta):
     else:
         return False
 
+def err_check(text):
+    result = json.loads(r.text)
+    if result['result'] != "true":
+        Log.log('Request failed, error message: {}'.format(result['message']), True)
+        return True
+    return False
+
 def get_price(url):
-    try:
-        r = requests.get(url)
-        if r.status_code != 200:
-            Log.log('Request failed, status code: {}'.format(r.status_code), True)
-            return -1
-        result = json.loads(r.text)
-        if result['result'] != "true":
-            Log.log('Request failed, error message: {}'.format(result['message']), True)
-            return -1
+    text = HttpHelper.get(url)
+    if text:
+        result = json.loads(text)
         return result['last']
-    except Exception:
-        Log.log(traceback.format_exc(), True)
-        return -1
 
 @pp.prepare
 def init_price_dict(config):
