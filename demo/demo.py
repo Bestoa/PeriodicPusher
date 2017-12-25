@@ -1,7 +1,7 @@
 import sys
 sys.path.append('../')
 from PeriodicPusher import PeriodicPusher, Message
-import Log
+from PeriodicPusher.Utils import Log
 
 if __name__ != '__main__':
     exit()

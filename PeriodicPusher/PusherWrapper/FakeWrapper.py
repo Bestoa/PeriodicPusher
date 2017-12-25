@@ -1,6 +1,5 @@
 import sys
-sys.path.append('../')
-import Log
+from PeriodicPusher.Utils import Log
 class Pusher:
     def __init__(self, config):
         Log.log('Pusher data: {}'.format(config))

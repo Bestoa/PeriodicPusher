@@ -4,9 +4,8 @@ import sys
 import time
 sys.path.append('../')
 from PeriodicPusher import PeriodicPusher, Message
-import Log
+from PeriodicPusher.Utils import Log, HttpHelper
 from exchange import *
-import HttpHelper
 
 if __name__ != '__main__':
     exit()
@@ -41,14 +40,14 @@ def need_report(p1, p2, delta):
         return False
 
 def err_check(text):
-    result = json.loads(r.text)
+    result = json.loads(text)
     if result['result'] != "true":
         Log.log('Request failed, error message: {}'.format(result['message']), True)
         return True
     return False
 
 def get_price(url):
-    text = HttpHelper.get(url)
+    text = HttpHelper.get(url, err_check = err_check)
     if text:
         result = json.loads(text)
         return result['last']

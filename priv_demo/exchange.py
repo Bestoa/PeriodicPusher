@@ -2,8 +2,7 @@ import traceback
 import sys
 import json
 sys.path.append('../')
-import Log
-import HttpHelper
+from PeriodicPusher.Utils import Log, HttpHelper
 
 def err_check(text):
     res = json.loads(text)

@@ -4,8 +4,7 @@ import sys
 import time
 sys.path.append('../')
 from PeriodicPusher import PeriodicPusher, Message
-import Log
-import HttpHelper
+from PeriodicPusher.Utils import Log, HttpHelper
 
 if __name__ != '__main__':
     exit()

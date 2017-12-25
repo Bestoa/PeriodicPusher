@@ -11,12 +11,12 @@
     {
         "NEED_MUTE" : true,
         "MUTE_START" : 23,
-        "MUTE_END" : 8 
+        "MUTE_END" : 8
     },
     "private_data":
     {
         "API_BASE" : "http://data.gate.io/api2/1/ticker/",
-        "THRESHOLD" : 2, 
+        "THRESHOLD" : -1,
         "CURRENCY" : [
             { "desc" : "btc:usdt", "api" : "btc_usdt" } ,
             { "desc" : "eth:usdt", "api" : "eth_usdt" } ,

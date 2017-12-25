@@ -2,9 +2,8 @@ import json
 import time
 import os
 import sched
-import PusherWrapper
-import Log
 from importlib import import_module
+from .Utils import Log
 
 class Message:
     def __init__(self, msg, important = False):
@@ -69,7 +68,7 @@ class PeriodicPusher:
         self.config = json.loads(config_json)
         Log.log('Config: {}'.format(self.config))
 
-        pusher_wrapper = import_module('PusherWrapper.%s' % self.config['PUSHER_NAME'])
+        pusher_wrapper = import_module('PeriodicPusher.PusherWrapper.%s' % self.config['PUSHER_NAME'])
         
         self.config_mute = self.config['mute_data']
         self.config_priv = self.config['private_data']
