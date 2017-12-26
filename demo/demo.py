@@ -1,5 +1,4 @@
 import sys
-sys.path.append('../')
 from PeriodicPusher import PeriodicPusher, Message
 from PeriodicPusher.Utils import Log
 

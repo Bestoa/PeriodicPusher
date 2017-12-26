@@ -5,6 +5,10 @@ import sched
 from importlib import import_module
 from .Utils import Log
 
+__VERSION__ = '0.0.1'
+__AUTHOR__ = 'Besto'
+__NAME__ = 'PeriodicPusher'
+
 class Message:
     def __init__(self, msg, important = False):
         self.msg = msg
