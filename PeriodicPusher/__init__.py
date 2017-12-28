@@ -71,9 +71,12 @@ class PeriodicPusher:
         # Register prepare, this is optional and just be called once
         func(self.config_priv)
 
-    def __init__(self, config_file):
-        config_json = open(config_file).read()
-        self.config = json.loads(config_json)
+    def __init__(self, config_file = None, config = None):
+        if config == None:
+            config_json = open(config_file).read()
+            self.config = json.loads(config_json)
+        else:
+            self.config = config
         Log.log('Config: {}'.format(self.config))
 
         pusher_wrapper = import_module('PeriodicPusher.PusherWrapper.%s' % self.config['PUSHER_NAME'])

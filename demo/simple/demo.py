@@ -5,11 +5,16 @@ from PeriodicPusher.Utils import Log
 if __name__ != '__main__':
     exit()
 
-if len(sys.argv) < 2:
-    exit()
+config = {
+        'INTERVAL' : 10,
+        'PUSHER_NAME' : 'FakeWrapper',
+        'pusher_data' : { 'PUSHER_DATA' : 'test-pusher-data' },
+        'mute_data' : { 'NEED_MUTE' : False },
+        'private_data': { 'PRIVATE_DATA' : 'test-private-data' }
+        }
 
 # Create new Pusher
-pp = PeriodicPusher(sys.argv[1])
+pp = PeriodicPusher(config = config)
 
 def demo_init(config):
     Log.log('From init, config: {}'.format(config))
