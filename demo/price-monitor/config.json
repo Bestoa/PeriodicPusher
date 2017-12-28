@@ -1,5 +1,5 @@
 {
-    "INTERVAL" : 10,
+    "INTERVAL" : 1,
     "PUSHER_NAME" : "FakeWrapper",
     "pusher_data" :
     {
@@ -10,14 +10,28 @@
     },
     "private_data":
     {
-        "THRESHOLD" : 1,
+        "THRESHOLD" : 0,
         "HANDLE" : [
             {
                 "HANDLE_NAME" : "gate",
                 "CURRENCY" : [
-                    { "source_currency" : "btc", "target_currency" : "usdt" },
-                    { "source_currency" : "bch", "target_currency" : "usdt" },
-                    { "source_currency" : "eth", "target_currency" : "usdt" }
+                    { "source_currency" : "BTC", "target_currency" : "USDT" },
+                    { "source_currency" : "BCH", "target_currency" : "USDT" },
+                    { "source_currency" : "ETH", "target_currency" : "USDT" }
+                ]
+            },
+            {
+                "HANDLE_NAME" : "wkc",
+                "CURRENCY" : [
+                    { "source_currency" : "WKC", "target_currency" : "CNY" }
+                ]
+            },
+            {
+                "HANDLE_NAME" : "cryptocompare",
+                "CURRENCY" : [
+                    { "source_currency" : "BTC", "target_currency" : "USD" },
+                    { "source_currency" : "BCH", "target_currency" : "USD" },
+                    { "source_currency" : "ETH", "target_currency" : "USD" }
                 ]
             }
         ]
