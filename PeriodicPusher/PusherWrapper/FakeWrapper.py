@@ -6,4 +6,5 @@ class Pusher:
 
     def push(self, msg):
         Log.log('Get push message: {}'.format(msg))
+        return True
 

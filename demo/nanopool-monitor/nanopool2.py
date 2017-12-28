@@ -15,8 +15,8 @@ if len(sys.argv) < 2:
 pp = PeriodicPusher(sys.argv[1])
 last_hashrate = -1
 
-def err_check(text):
-    result = json.loads(text)
+def err_check(r):
+    result = r.json()
     if not result['status']:
         Log.log('Api call failed, error: {}'.format(result['error']), True)
         return True
@@ -25,9 +25,9 @@ def err_check(text):
 
 def get_report_hashrate(config):
     url = config['API_BASE'] + config['ACCOUNT']
-    text = HttpHelper.get(url, err_check = err_check)
-    if text:
-        result = json.loads(text)
+    r = HttpHelper.get(url, err_check = err_check)
+    if r:
+        result = r.json()
         return result['data']
     return -1
 

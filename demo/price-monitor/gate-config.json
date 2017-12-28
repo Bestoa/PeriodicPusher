@@ -3,7 +3,7 @@
     "PUSHER_NAME" : "PushBearWrapper",
     "pusher_data" :
     {
-        "API_BASE" : "https://pushbear.ftqq.com/sub?sendkey=",
+        "API_BASE" : "https://pushbear.ftqq.com/sub",
         "KEY" : "",
         "TITLE" : ""
     },

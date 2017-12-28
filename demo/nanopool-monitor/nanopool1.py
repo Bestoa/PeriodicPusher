@@ -21,8 +21,8 @@ def build_msg(origin_msg):
     msg.append({'avgHashrate' : sorted(origin_msg['avgHashrate'].items(), key = lambda x:int(x[0][1:]))})
     return str(msg)
 
-def err_check(text):
-    result = json.loads(text)
+def err_check(r):
+    result = r.json()
     if not result['status']:
         Log.log('Api call failed, error: {}'.format(result['error']), True)
         return True
@@ -31,9 +31,9 @@ def err_check(text):
 @pp.notification_register
 def hourly_notify(config):
     url = config['API_BASE'] + config['ACCOUNT']
-    text = HttpHelper.get(url, err_check = err_check)
-    if text:
-        res = json.loads(text)
+    r = HttpHelper.get(url, err_check = err_check)
+    if r:
+        res = r.json()
         return Message(build_msg(res['data']))
 
 if __name__ == '__main__':

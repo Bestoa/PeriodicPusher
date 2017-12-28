@@ -38,17 +38,17 @@ def need_report(p1, p2, delta):
     else:
         return False
 
-def err_check(text):
-    result = json.loads(text)
+def err_check(r):
+    result = r.json()
     if result['result'] != "true":
         Log.log('Request failed, error message: {}'.format(result['message']), True)
         return True
     return False
 
 def get_price(url):
-    text = HttpHelper.get(url, err_check = err_check)
-    if text:
-        result = json.loads(text)
+    r = HttpHelper.get(url, err_check = err_check)
+    if r:
+        result = r.json()
         return result['last']
 
 @pp.prepare
