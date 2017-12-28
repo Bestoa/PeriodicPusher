@@ -46,17 +46,21 @@ class PeriodicPusher:
         if msg:
             self.push_to_user(msg)
 
-    def notify_loop(self, interval):
+    def notify_loop(self, interval, loop):
         # Next notification
-        self.schedule.enter(interval, 0, self.notify_loop, kwargs = { 'interval': interval })
+        if not loop:
+            return
+        if loop > 0:
+            loop -= 1
+        self.schedule.enter(interval, 0, self.notify_loop, kwargs = { 'interval': interval, 'loop': loop })
         self.notify_once()
 
-    def run(self):
+    def run(self, loop = -1):
         if not self.get_notification:
             Log.log('Must set get_notification method before call run!', True)
             return
         Log.log('Start')
-        self.schedule.enter(0, 0, self.notify_loop, kwargs = { 'interval': self.config['INTERVAL'] })
+        self.schedule.enter(0, 0, self.notify_loop, kwargs = { 'interval': self.config['INTERVAL'], 'loop': loop })
         self.schedule.run()
 
     def notification_register(self, func):
