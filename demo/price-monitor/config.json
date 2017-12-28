@@ -1,0 +1,25 @@
+{
+    "INTERVAL" : 10,
+    "PUSHER_NAME" : "FakeWrapper",
+    "pusher_data" :
+    {
+    },
+    "mute_data" :
+    {
+        "NEED_MUTE" : false
+    },
+    "private_data":
+    {
+        "THRESHOLD" : 1,
+        "HANDLE" : [
+            {
+                "HANDLE_NAME" : "gate",
+                "CURRENCY" : [
+                    { "source_currency" : "btc", "target_currency" : "usdt" },
+                    { "source_currency" : "bch", "target_currency" : "usdt" },
+                    { "source_currency" : "eth", "target_currency" : "usdt" }
+                ]
+            }
+        ]
+    }
+}
