@@ -65,3 +65,17 @@ def test_mute():
     pp.run(1)
     assert TestCallback.callback.get() == 'TEST'
 
+def test_push_retry():
+    config = {
+            'INTERVAL' : 1,
+            'PUSHER_NAME' : 'PushBearWrapper',
+            'pusher_data' : { 'API_BASE': '', 'KEY' : '', 'TITLE' : '' },
+            'mute_data' : { 'NEED_MUTE' : False },
+            'private_data': { 'PRIVATE_DATA' : 'test-private-data' }
+            }
+    pp = PeriodicPusher(config  = config)
+    pp.notification_register(gen_notification)
+    pp.run(1)
+    assert pp.push_retry_counts == 3
+    assert pp.push_fail_counts == 1
+

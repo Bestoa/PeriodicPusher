@@ -37,7 +37,17 @@ class PeriodicPusher:
             Log.log('Mute Message')
             return
         # Call pusher
-        self.pusher.push(msg.msg)
+        retry = 3
+        while retry > 0:
+            ret = self.pusher.push(msg.msg)
+            if ret:
+                break
+            retry -= 1
+            self.push_retry_counts += 1
+            Log.log('Push failed. retry = {}'.format(retry), True)
+        if retry == 0:
+            self.push_fail_counts += 1
+
 
     def notify_once(self):
         # Get message from implementation
@@ -87,4 +97,6 @@ class PeriodicPusher:
         self.schedule = sched.scheduler(time.time, time.sleep)
         self.pusher = pusher_wrapper.Pusher(self.config['pusher_data'])
         self.get_notification = None
+        self.push_retry_counts = 0
+        self.push_fail_counts = 0
 
