@@ -68,8 +68,8 @@ def test_mute():
 def test_push_retry():
     config = {
             'INTERVAL' : 1,
-            'PUSHER_NAME' : 'PushBearWrapper',
-            'pusher_data' : { 'API_BASE': '', 'KEY' : '', 'TITLE' : '' },
+            'PUSHER_NAME' : 'InstaPushWrapper',
+            'pusher_data' : { 'APPID': '', 'SECRET' : '', 'EVENT_NAME' : '', 'TRACKERS' : '' },
             'mute_data' : { 'NEED_MUTE' : False },
             'private_data': { 'PRIVATE_DATA' : 'test-private-data' }
             }

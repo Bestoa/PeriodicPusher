@@ -1,4 +1,5 @@
 from instapush import Instapush, App
+import traceback
 from PeriodicPusher.Utils import Log
 
 class Pusher:
@@ -7,7 +8,11 @@ class Pusher:
         self.app = App(appid = self.config['APPID'], secret = self.config['SECRET'])
 
     def push(self, msg):
-        ret = self.app.notify(event_name = self.config['EVENT_NAME'], trackers = { self.config['TRACKERS']: str(msg) })
+        try:
+            ret = self.app.notify(event_name = self.config['EVENT_NAME'], trackers = { self.config['TRACKERS']: str(msg) })
+        except Exception:
+            Log.log(traceback.format_exc(), True)
+            return False
         if ret == None:
             Log.log('Unknown error.', True)
             return False
