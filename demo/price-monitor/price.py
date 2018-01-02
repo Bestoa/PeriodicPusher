@@ -32,9 +32,13 @@ def get_cny_exchange_rate():
     return cny_exchange_rate[0]
 
 
-def need_report(p1, p2, delta):
+def need_report(p1, p2, tendency, delta):
     high = p2 * (100 + delta) /100
     low = p2 * (100 - delta) /100
+    if tendency > 0:
+        low = low * (100 - delta) / 100
+    elif tendency < 0:
+        high = high * (100 + delta) /100
     if p1 > high or p1 < low:
         return True
     else:
@@ -55,7 +59,7 @@ def init_price_dict(config):
             price = get_price()
             desc = '{} {}:{}'.format(handle['HANDLE_NAME'], c1, c2)
             msg += '{} {}; '.format(desc, price)
-            price_dict.update({ desc : { 'get_price' : get_price, 'last_report' : price } })
+            price_dict.update({ desc : { 'get_price' : get_price, 'last_report' : price, 'tendency': 0 } })
     Log.log_debug(msg)
     Log.log_debug('Price init finished.')
 
@@ -72,8 +76,9 @@ def check_price(config):
         price = currency_handle['get_price']()
         if price >= 0:
             log_msg += '{} {}; '.format(desc, price)
-            if need_report(price, currency_handle['last_report'], config['THRESHOLD']):
+            if need_report(price, currency_handle['last_report'], currency_handle['tendency'], config['THRESHOLD']):
                 msg += '\n\n{} current {}, last report {}\n\n'.format(desc, price, currency_handle['last_report'])
+                currency_handle['tendency'] = price - currency_handle['last_report']
                 currency_handle['last_report'] = price
                 price_dict.update({ desc : currency_handle })
     Log.log_debug(log_msg)
