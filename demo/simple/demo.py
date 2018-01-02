@@ -1,4 +1,4 @@
-import sys
+import json
 from PeriodicPusher import PeriodicPusher, Message
 from PeriodicPusher.Utils import Log
 
@@ -17,11 +17,11 @@ config = {
 pp = PeriodicPusher(config = config)
 
 def demo_init(config):
-    Log.log('From init, config: {}'.format(config))
+    Log.log_debug('From init, config: {}'.format(json.dumps(config, indent = 4)))
     # Add your init code here, config contains private_data in json file
 
 def demo_get_notification(config):
-    Log.log('From get_notification, config: {}'.format(config))
+    Log.log_debug('From get_notification, config: {}'.format(json.dumps(config, indent = 4)))
     # Add your notification here, config contains private_data in json file.
     return Message('Test')
 

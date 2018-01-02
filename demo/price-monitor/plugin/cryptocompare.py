@@ -5,7 +5,7 @@ API = 'https://min-api.cryptocompare.com/data/price'
 def err_check(r):
     result = r.json()
     if 'Response' in result:
-        Log.log('Request failed, error message: {}'.format(result['Message']), True)
+        Log.log_error('Request failed, error message: {}'.format(result['Message']))
         return True
     return False
 

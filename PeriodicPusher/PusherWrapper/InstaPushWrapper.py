@@ -11,13 +11,13 @@ class Pusher:
         try:
             ret = self.app.notify(event_name = self.config['EVENT_NAME'], trackers = { self.config['TRACKERS']: str(msg) })
         except Exception:
-            Log.log(traceback.format_exc(), True)
+            Log.log_error(traceback.format_exc())
             return False
         if ret == None:
-            Log.log('Unknown error.', True)
+            Log.log_error('Unknown error.')
             return False
         if ret['error']:
-            Log.log('Push error, msg: {}'.format(ret['msg']), True)
+            Log.log_error('Push error, msg: {}'.format(ret['msg']))
             return False
         return True
 

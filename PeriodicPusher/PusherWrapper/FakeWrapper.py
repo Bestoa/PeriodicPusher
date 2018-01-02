@@ -1,12 +1,13 @@
 # For test only
+import json
 from PeriodicPusher.PusherWrapper import TestCallback
 from PeriodicPusher.Utils import Log
 class Pusher:
     def __init__(self, config):
-        Log.log('Pusher data: {}'.format(config))
+        Log.log_debug('Pusher data: {}'.format(json.dumps(config, indent = 4)))
 
     def push(self, msg):
-        Log.log('Get push message: {}'.format(msg))
+        Log.log_debug('Get push message: {}'.format(msg))
         TestCallback.callback.put(msg)
         return True
 

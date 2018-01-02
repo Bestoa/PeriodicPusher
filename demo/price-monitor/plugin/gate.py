@@ -5,7 +5,7 @@ API = 'http://data.gate.io/api2/1/ticker/'
 def err_check(r):
     result = r.json()
     if result['result'] != "true":
-        Log.log('Request failed, error message: {}'.format(result['message']), True)
+        Log.log_error('Request failed, error message: {}'.format(result['message']))
         return True
     return False
 

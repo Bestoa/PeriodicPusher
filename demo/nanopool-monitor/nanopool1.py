@@ -9,7 +9,7 @@ if __name__ != '__main__':
     exit()
 
 if len(sys.argv) < 2:
-    Log.log('Missing config file.', True)
+    Log.log_error('Missing config file.')
     exit()
 
 pp = PeriodicPusher(sys.argv[1])
@@ -24,7 +24,7 @@ def build_msg(origin_msg):
 def err_check(r):
     result = r.json()
     if not result['status']:
-        Log.log('Api call failed, error: {}'.format(result['error']), True)
+        Log.log_error('Api call failed, error: {}'.format(result['error']))
         return True
     return False
 

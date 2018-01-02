@@ -11,7 +11,7 @@ if __name__ != '__main__':
     exit()
 
 if len(sys.argv[1]) < 2:
-    Log.log('Missing config file.', True)
+    Log.log_error('Missing config file.')
     exit()
 
 pp = PeriodicPusher(sys.argv[1])
@@ -23,12 +23,12 @@ def get_cny_exchange_rate():
     # Update CNY exchange rate per hour.
     if now - cny_exchange_rate[1] < 3600:
         return cny_exchange_rate[0]
-    Log.log('Update CNY exchange rate...')
+    Log.log_debug('Update CNY exchange rate...')
     rate = get_exchange_rate()
     if rate >= 0:
         cny_exchange_rate[0] = rate
         cny_exchange_rate[1] = now
-    Log.log('USD:CNY = {}'.format(cny_exchange_rate[0]))
+    Log.log_debug('USD:CNY = {}'.format(cny_exchange_rate[0]))
     return cny_exchange_rate[0]
 
 
@@ -43,7 +43,7 @@ def need_report(p1, p2, delta):
 @pp.prepare
 def init_price_dict(config):
     global price_dict
-    Log.log('Price init...')
+    Log.log_debug('Price init...')
     msg = ''
     # Go through all handles
     for handle in config['HANDLE']:
@@ -56,8 +56,8 @@ def init_price_dict(config):
             desc = '{} {}:{}'.format(handle['HANDLE_NAME'], c1, c2)
             msg += '{} {}; '.format(desc, price)
             price_dict.update({ desc : { 'get_price' : get_price, 'last_report' : price } })
-    Log.log(msg)
-    Log.log('Price init finished.')
+    Log.log_debug(msg)
+    Log.log_debug('Price init finished.')
 
 
 
@@ -66,7 +66,7 @@ def check_price(config):
     msg = ''
     log_msg = ''
     global price_dict
-    Log.log('Check price...')
+    Log.log_debug('Check price...')
     for desc in price_dict:
         currency_handle = price_dict[desc]
         price = currency_handle['get_price']()
@@ -76,7 +76,7 @@ def check_price(config):
                 msg += '\n\n{} current {}, last report {}\n\n'.format(desc, price, currency_handle['last_report'])
                 currency_handle['last_report'] = price
                 price_dict.update({ desc : currency_handle })
-    Log.log(log_msg)
+    Log.log_debug(log_msg)
     if msg == '':
         return None
     return Message(msg)

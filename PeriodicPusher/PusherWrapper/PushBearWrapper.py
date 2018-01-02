@@ -9,7 +9,7 @@ class Pusher:
     def err_check(self, r):
         res = r.json()
         if res['code'] != 0:
-            Log.log('Request failed, message: {}'.format(res['message']), True)
+            Log.log_error('Request failed, message: {}'.format(res['message']))
             return True
         return False
 

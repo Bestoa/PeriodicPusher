@@ -31,10 +31,10 @@ class PeriodicPusher:
         return False
 
     def push_to_user(self, msg):
-        Log.log('Push message: {}'.format(msg.msg))
+        Log.log_debug('Push message: {}'.format(msg.msg))
         # Never mute important messages
         if not msg.important and self.check_mute():
-            Log.log('Mute Message')
+            Log.log_debug('Mute Message')
             return
         # Call pusher
         retry = 3
@@ -44,7 +44,7 @@ class PeriodicPusher:
                 break
             retry -= 1
             self.push_retry_counts += 1
-            Log.log('Push failed. retry = {}'.format(retry), True)
+            Log.log_error('Push failed. retry = {}'.format(retry))
         if retry == 0:
             self.push_fail_counts += 1
 
@@ -67,9 +67,9 @@ class PeriodicPusher:
 
     def run(self, loop = -1):
         if not self.get_notification:
-            Log.log('Must set get_notification method before call run!', True)
+            Log.log_error('Must set get_notification method before call run!')
             return
-        Log.log('Start')
+        Log.log_debug('Start')
         self.schedule.enter(0, 0, self.notify_loop, kwargs = { 'interval': self.config['INTERVAL'], 'loop': loop })
         self.schedule.run()
 
@@ -87,7 +87,7 @@ class PeriodicPusher:
             self.config = json.loads(config_json)
         else:
             self.config = config
-        Log.log('Config: {}'.format(self.config))
+        Log.log_debug('Config: {}'.format(json.dumps(self.config, indent = 4)))
 
         pusher_wrapper = import_module('PeriodicPusher.PusherWrapper.%s' % self.config['PUSHER_NAME'])
         
