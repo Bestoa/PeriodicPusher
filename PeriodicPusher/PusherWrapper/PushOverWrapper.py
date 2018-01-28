@@ -8,3 +8,4 @@ class Pusher:
 
     def push(self, msg):
         Client(self.config['KEY']).send_message(msg, title = self.config['TITLE'])
+        return True
