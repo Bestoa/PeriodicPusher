@@ -1,8 +1,11 @@
 {
     "INTERVAL" : 1,
-    "PUSHER_NAME" : "FakeWrapper",
+    "PUSHER_NAME" : "PushOverWrapper",
     "pusher_data" :
     {
+        "API_TOKEN" : "",
+        "KEY" : "",
+        "TITLE" : "Price Notice"
     },
     "mute_data" :
     {
