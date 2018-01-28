@@ -8,6 +8,6 @@ setup(
     author_email = 'bestoapache@gmail.com',
     license = 'AGPL',
     packages=find_packages(exclude=['tests', 'tests.*']),
-    install_requires = [ 'requests', 'instapush' ],
+    install_requires = [ 'requests', 'instapush', 'python-pushover'],
 )
 

@@ -2,29 +2,30 @@
 from PeriodicPusher.PusherWrapper import InstaPushWrapper
 from PeriodicPusher.PusherWrapper import PushBearWrapper
 from PeriodicPusher.PusherWrapper import FakeWrapper
+from PeriodicPusher.PusherWrapper import PushOverWrapper
 from PeriodicPusher.PusherWrapper import TestCallback
 
-def test_instapush_successful():
-    config = {
-            'APPID' : '5a4207a3a4c48a8ac910716a',
-            'SECRET' : '0d123d513168597911d3ebc43a8574c2',
-            'EVENT_NAME': 'test-event',
-            'TRACKERS' : 'test-message'
-            }
-
-    pusher = InstaPushWrapper.Pusher(config)
-    assert pusher.push('Hello World') == True
-
-def test_instapush_failed():
-    config = {
-            'APPID' : '',
-            'SECRET' : '',
-            'EVENT_NAME': '',
-            'TRACKERS' : ''
-            }
-
-    pusher = InstaPushWrapper.Pusher(config)
-    assert pusher.push('Hello World') == False
+#def test_instapush_successful():
+#    config = {
+#            'APPID' : '5a4207a3a4c48a8ac910716a',
+#            'SECRET' : '0d123d513168597911d3ebc43a8574c2',
+#            'EVENT_NAME': 'test-event',
+#            'TRACKERS' : 'test-message'
+#            }
+#
+#    pusher = InstaPushWrapper.Pusher(config)
+#    assert pusher.push('Hello World') == True
+#
+#def test_instapush_failed():
+#    config = {
+#            'APPID' : '',
+#            'SECRET' : '',
+#            'EVENT_NAME': '',
+#            'TRACKERS' : ''
+#            }
+#
+#    pusher = InstaPushWrapper.Pusher(config)
+#    assert pusher.push('Hello World') == False
 
 def test_pushbear_successful():
     config = {
@@ -43,6 +44,15 @@ def test_pushbear_failed():
             }
     pusher = PushBearWrapper.Pusher(config)
     assert pusher.push('Hello World') == False
+
+def test_pushover_successful():
+    config = {
+            'API_TOKEN' : 'aoa5q9gmcoohfwvf52dcwcq57m4a4s',
+            'KEY' : 'gsucsdbputjfgpnag7iih312o1yxw2',
+            'TITLE' : 'Test'
+            }
+    pusher = PushOverWrapper.Pusher(config)
+    pusher.push('Unit test')
 
 def test_fakepusher():
     pusher = FakeWrapper.Pusher(None)
