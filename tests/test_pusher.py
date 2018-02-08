@@ -47,12 +47,21 @@ def test_pushbear_failed():
 
 def test_pushover_successful():
     config = {
-            'API_TOKEN' : 'aoa5q9gmcoohfwvf52dcwcq57m4a4s',
-            'KEY' : 'gsucsdbputjfgpnag7iih312o1yxw2',
+            'API_TOKEN' : 'apwg7a8gvh2efqi9q1829sibqprfhy',
+            'KEY' : 'uogn1sopc17faf5tyjs4jpyniy1n8f',
             'TITLE' : 'Test'
             }
     pusher = PushOverWrapper.Pusher(config)
-    pusher.push('Unit test')
+    assert pusher.push('Unit test') == True
+
+def test_pushover_failed():
+    config = {
+            'API_TOKEN' : '',
+            'KEY' : '',
+            'TITLE' : 'Test'
+            }
+    pusher = PushOverWrapper.Pusher(config)
+    assert pusher.push('Unit test') == False
 
 def test_fakepusher():
     pusher = FakeWrapper.Pusher(None)

@@ -5,7 +5,7 @@ import sched
 from importlib import import_module
 from .Utils import Log
 
-__VERSION__ = '0.1.0'
+__VERSION__ = '0.1.1'
 __AUTHOR__ = 'Besto'
 __NAME__ = 'PeriodicPusher'
 
