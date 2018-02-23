@@ -67,7 +67,7 @@ def init_price_dict(config):
 
 @pp.notification_register
 def check_price(config):
-    msg = ''
+    msg = []
     log_msg = ''
     global price_dict
     Log.log_debug('Check price...')
@@ -77,14 +77,14 @@ def check_price(config):
         if price >= 0:
             log_msg += '{} {}; '.format(desc, price)
             if need_report(price, currency_handle['last_report'], currency_handle['tendency'], config['THRESHOLD']):
-                msg += '\n\n{} current {}, last report {}\n\n'.format(desc, price, currency_handle['last_report'])
+                msg.append(Message('{} current {}, last report {}'.format(desc, price, currency_handle['last_report'])))
                 currency_handle['tendency'] = price - currency_handle['last_report']
                 currency_handle['last_report'] = price
                 price_dict.update({ desc : currency_handle })
     Log.log_debug(log_msg)
-    if msg == '':
+    if msg == []:
         return None
-    return Message(msg)
+    return msg
 
 if __name__ == '__main__':
     pp.run()
