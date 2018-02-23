@@ -5,7 +5,7 @@ import sched
 from importlib import import_module
 from .Utils import Log
 
-__VERSION__ = '0.1.1'
+__VERSION__ = '0.1.2'
 __AUTHOR__ = 'Besto'
 __NAME__ = 'PeriodicPusher'
 
@@ -53,8 +53,12 @@ class PeriodicPusher:
         # Get message from implementation
         msg = self.get_notification(self.config_priv)
         # Don't push empty message
-        if msg:
-            self.push_to_user(msg)
+        if msg == None:
+            return
+        if type(msg) != list:
+            msg = [msg]
+        for m in msg:
+            self.push_to_user(m)
 
     def notify_loop(self, interval, loop):
         # Next notification
