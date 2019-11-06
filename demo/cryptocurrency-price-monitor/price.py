@@ -75,9 +75,9 @@ def check_price(config):
         currency_handle = price_dict[desc]
         price = currency_handle['get_price']()
         if price >= 0:
-            log_msg += '{} {}; '.format(desc, price)
+            log_msg += '{} {} {:.2%};'.format(desc, price, price / currency_handle['last_report'] - 1)
             if need_report(price, currency_handle['last_report'], currency_handle['tendency'], config['THRESHOLD']):
-                msg.append(Message('{} current {}, last report {}'.format(desc, price, currency_handle['last_report'])))
+                msg.append(Message('{} current {}, last report {}, {:.2%}'.format(desc, price, currency_handle['last_report'], price / currency_handle['last_report'] - 1)))
                 currency_handle['tendency'] = price - currency_handle['last_report']
                 currency_handle['last_report'] = price
                 price_dict.update({ desc : currency_handle })
